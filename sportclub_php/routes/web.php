@@ -15,10 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
-Route::get('/test', function () {
-    DB::connection()->getPdo();
-    return 'Database connection successful!';
+Route::get('/aboutus', function () {
+    return view('aboutus');
+});
+
+Route::get('/events', function () {
+    return view('events');
+});
+
+Route::get('/news', function () {
+    return view('news');
 });
