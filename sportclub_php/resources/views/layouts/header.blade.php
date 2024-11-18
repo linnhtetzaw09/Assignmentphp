@@ -1,6 +1,6 @@
 <!-- start header section -->
 
-<header id="home">
+<header id="home" class="@if(request()->routeIs('index')) header-index @endif">
             
     <!-- start Nav bar -->
 
@@ -19,11 +19,11 @@
 
             <div id="nav" class="navbar-collapse collapse justify-content-end text-uppercase fw-bold">
                 <ul class=" navbar-nav">
-                    <li class="nav-item"><a href="#home" class="nav-link mx-2 menuitems">Home</a></li>
+                    <li class="nav-item"><a href="{{ route('index') }}" class="nav-link mx-2 menuitems">Home</a></li>
                     <li class="nav-item"><a href="#aboutus" class="nav-link mx-2 menuitems">About Us</a></li>
                     <li class="nav-item"><a href="#activities" class="nav-link mx-2 menuitems">Activities</a></li>
-                    <li class="nav-item"><a href="announcement.html" class="nav-link mx-2 menuitems">News & Announcements</a></li>
-                    <li class="nav-item"><a href="events.html" class="nav-link mx-2 menuitems">Events</a></li>
+                    <li class="nav-item"><a href="{{ route('news') }}" class="nav-link mx-2 menuitems">News & Announcements</a></li>
+                    <li class="nav-item"><a href="{{ route('events') }}" class="nav-link mx-2 menuitems">Events</a></li>
                     <li class="nav-item"><a href="#contact" class="nav-link mx-2 menuitems">Contact</a></li>
                 </ul>
             </div>

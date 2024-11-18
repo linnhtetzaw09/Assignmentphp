@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@extends('layouts.header')
 
 @section('banner')
     <div class="text-light text-center text-md-end banners">
@@ -12,12 +11,11 @@
     </div>
 @endsection
 
-
 @section('content')
 
     <!-- start back to top -->
         <div class="fixed-bottom">
-            <a href="index.html" class="btn-backtotops"><i class="fas fa-arrow-up"></i></a>
+            <a href="{{ route('index') }}" class="btn-backtotops"><i class="fas fa-arrow-up"></i></a>
         </div>
     <!-- end back to top -->
 
@@ -56,7 +54,7 @@
 
                         <h5 class="fw-bold">We are the Sports Club Team under the Student Council of Auston University, dedicated to promoting health, wellness, and community spirit through engaging sports activities and events. </h5>
                         <p class="fw-bold">Our club provides students with opportunities to participate in various sports, fostering teamwork, discipline, and personal growth. We aim to create a supportive environment where members can develop their skills, enjoy healthy competition, and connect with fellow students who share a passion for sports. Join us as we build a vibrant, active, and unified campus community!</p>
-                        <a href="aboutus.html" class="btn btn-danger rounded-0">See Members</a>
+                        <a href="{{ route('aboutus') }}" class="btn btn-danger rounded-0">See Members</a>
 
                     </div>
 
@@ -236,14 +234,14 @@
 
                 <form action="" method="">
 
-                    <div class="form-group py-3">
-                        <input type="text" name="name" id="name" class="form-control p-3 inputs" placeholder="Enter your name" required autocomplete="off"/>
+                    <div class="form-group py-3 my-2">
                         <label for="name" class="labels">Full Name <span class="text-danger"> * required</span></label>
+                        <input type="text" name="name" id="name" class="form-control p-3 inputs" placeholder="Enter your name" required autocomplete="off"/>
                     </div>
 
                     <div class="form-group py-3">
-                        <input type="email" name="email" id="email" class="form-control p-3 inputs" placeholder="Enter your email" required autocomplete="off"/>
                         <label for="email" class="labels">Email Address <span class="text-danger"> * required</span></label>
+                        <input type="email" name="email" id="email" class="form-control p-3 inputs" placeholder="Enter your email" required autocomplete="off"/>
                     </div>
 
                     <div class="my-4">
@@ -258,6 +256,7 @@
                     </div>
 
                 </form>
+                
             </div>
         </div>
     </section>

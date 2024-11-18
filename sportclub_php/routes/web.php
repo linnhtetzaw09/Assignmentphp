@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,17 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('welcome');
 });
 
-Route::get('/aboutus', function () {
-    return view('aboutus');
+// Public routes
+Route::view('/', 'index')->name('index');
+Route::view('/aboutus', 'aboutus')->name('aboutus');
+
+// Authenticated routes
+Route::middleware(['auth'])->group(function () {
+    Route::view('/news', 'news')->name('news');
+    Route::view('/events', 'events')->name('events');
 });
 
-Route::get('/events', function () {
-    return view('events');
-});
-
-Route::get('/news', function () {
-    return view('news');
-});
+require __DIR__.'/auth.php';

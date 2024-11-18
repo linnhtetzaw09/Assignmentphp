@@ -86,16 +86,16 @@ body{
 /* end stick note */
 
 /* start header section */
-header{
+.header-index {
     height: 100vh;
-    background: linear-gradient(30deg,rgba(0,0,0,0),rgba(0,0,0,0.5)), url("/assets/img/banner/sports-tools.jpg");
+    background: linear-gradient(30deg, rgba(0,0,0,0), rgba(0,0,0,0.5)), url("/assets/img/banner/sports-tools.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-
     position: relative;
 }
+
 
 /* start nav bar */
 .navbar{
