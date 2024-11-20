@@ -1,36 +1,43 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sport Club Events</title>
+    <!-- Fav Icon -->
+    <link rel="icon" href="{{ asset('assets/img/fav/favicon.png') }}" type="image/png" sizes="16x16">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/libs/bootstrap-5.3.2-dist/css/bootstrap.min.css') }}"/>
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- jQuery UI CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/libs/jquery-ui-1.13.2/jquery-ui.min.css') }}">
+    <!-- Lightbox2 CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/libs/lightbox2-2.11.4/dist/css/lightbox.min.css') }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/dist/style.css') }}">
+</head>
+<body>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- Include Header -->
+    @include('layouts.header')
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <main>
+        @yield('content') 
+    </main>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <!-- Include Footer -->
+    @include('layouts.footer')
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+    <!-- Bootstrap JS -->
+    <script src="{{ asset('assets/libs/bootstrap-5.3.2-dist/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <!-- jQuery JS -->
+    <script src="{{ asset('assets/libs/jquery/jquery-3.7.1.min.js') }}" type="text/javascript"></script>
+    <!-- jQuery UI JS -->
+    <script src="{{ asset('assets/libs/jquery-ui-1.13.2/jquery-ui.min.js') }}" type="text/javascript"></script>
+    <!-- Lightbox2 JS -->
+    <script src="{{ asset('assets/libs/lightbox2-2.11.4/dist/js/lightbox.min.js') }}" type="text/javascript"></script>
+    <!-- Custom JS -->
+    <script src="{{ asset('assets/dist/app.js') }}" type="text/javascript"></script>
+</body>
 </html>

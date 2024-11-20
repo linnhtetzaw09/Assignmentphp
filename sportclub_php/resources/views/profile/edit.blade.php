@@ -1,29 +1,19 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
+@section('content')
+<div class="container">
+    <h1>Edit Profile</h1>
+    <form method="POST" action="{{ route('profile.update') }}">
+        @csrf
+        <div class="mb-3">
+            <label for="preferred_sport" class="form-label">Preferred Sport</label>
+            <input type="text" class="form-control" name="preferred_sport" value="{{ old('preferred_sport', $user->preferred_sport) }}">
         </div>
-    </div>
-</x-app-layout>
+        <div class="mb-3">
+            <label for="skill_level" class="form-label">Skill Level</label>
+            <input type="text" class="form-control" name="skill_level" value="{{ old('skill_level', $user->skill_level) }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </form>
+</div>
+@endsection

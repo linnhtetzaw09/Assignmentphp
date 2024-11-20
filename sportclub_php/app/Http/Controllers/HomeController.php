@@ -3,62 +3,51 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Event;
 
 class HomeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // Restrict access to the 'news' and 'events' methods only to authenticated users
+        $this->middleware('auth')->only(['news', 'events']);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
-        return view('index');
+        return view('home');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the events page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function create()
+    public function events()
     {
-        //
+        $events = Event::all(); // Fetch all events from the database
+        return view('events', compact('events'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show the news page.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function store(Request $request)
+    public function news()
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Fetch news items from a model (assuming you have a News model)
+        $news = []; // Replace with actual data fetching
+        return view('news', compact('news'));
     }
 }
