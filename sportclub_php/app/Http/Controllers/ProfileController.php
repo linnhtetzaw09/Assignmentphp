@@ -22,7 +22,8 @@ class ProfileController extends Controller
     // Update the authenticated user
     auth()->user()->update($request->only('preferred_sport', 'skill_level'));
 
-    return back()->with('success', 'Profile updated successfully.');
+    // Redirect to the index page with a success message
+    return redirect()->route('index')->with('success', 'Profile updated successfully.');
 }
 
 

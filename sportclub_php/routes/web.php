@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,9 @@ Route::view('/', 'index')->name('index');
 Route::view('/aboutus', 'aboutus')->name('aboutus');
 
 Route::get('/events', [HomeController::class, 'events'])->name('events');
+Route::post('/events/register', [EventController::class, 'register'])->name('event.index.register');
+
+
 Route::get('/news', [HomeController::class, 'news'])->name('news');
 
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');

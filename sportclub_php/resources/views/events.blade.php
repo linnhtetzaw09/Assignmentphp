@@ -24,7 +24,7 @@
             
                 <div class="btn-container">
                     <a href="#" onclick="footballEventInfo()" id="football" class="btn">About Event</a>
-                    <button type="button" id="" class="btn registerBtn">Register Now</button>
+                    <a href="#" class="btn register-btn" data-event-id="1">Register Now</a>
                 </div>
             </div>
             
@@ -50,7 +50,7 @@
 
                 <div class="btn-container">
                     <a href="#" onclick="tennisEventInfo()" id="tennis" class="btn">About Event</a>
-                    <button type="button" id="" class="btn registerBtn">Register Now</button>
+                    <a href="#" class="btn register-btn" data-event-id="2">Register Now</a>
                 </div>
             </div>
 
@@ -75,7 +75,7 @@
 
                 <div class="btn-container">
                     <a href="#" onclick="swimEventInfo()" id="swim" class="btn">About Event</a>
-                    <button type="button" id="" class="btn registerBtn">Register Now</button>
+                    <a href="#" class="btn register-btn" data-event-id="3">Register Now</a>
                 </div>
             </div>
 
@@ -100,7 +100,7 @@
 
                 <div class="btn-container">
                     <a href="#" onclick="basketEventInfo()" id="basket" class="btn">About Event</a>
-                    <button type="button" id="" class="btn registerBtn">Register Now</button>
+                    <a href="#" class="btn register-btn" data-event-id="4">Register Now</a>
                 </div>
             </div>
 
@@ -118,10 +118,99 @@
             </div>
 
         </div>
+        
+        <!-- Registration Modal (Single for All Events) -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Register for Event</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="registrationForm">
+                    @csrf <!-- CSRF token for security -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="age" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="age" name="age" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" required>
+                    </div>
+                    <input type="hidden" id="event_id" name="event_id" value="">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
     </div>
+
+    <div id="alertMessage" class="alert d-none" role="alert"></div>
+
 
 </section>
     
 @endsection
 
+@section('scripts')
+    <script>
+        
+        $(document).ready(function () {
+    // Open modal and set event ID
+    $(document).on('click', '.register-btn', function () {
+        const eventId = $(this).data('event-id');
+        $('#event_id').val(eventId); // Set event ID in hidden input
+        $('#registerModal').modal('show'); // Show the modal
+    });
+
+    // Handle form submission
+    $('#registrationForm').on('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = $(this).serialize(); // Serialize form data for AJAX
+
+        $.ajax({
+            url: '/events/register', // Your backend route
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                if (response.success) {
+                    // Show success alert
+                    $('#alertMessage')
+                        .removeClass('d-none alert-danger')
+                        .addClass('alert-success')
+                        .text('Registration successful!');
+
+                    // Close the modal and reset the form
+                    $('#registerModal').modal('hide');
+                    $('#registrationForm')[0].reset();
+                } else {
+                    // Show error alert with the backend error message
+                    $('#alertMessage')
+                        .removeClass('d-none alert-success')
+                        .addClass('alert-danger')
+                        .text(response.message || 'Registration failed.');
+                }
+            },
+            error: function (xhr) {
+                // Show error alert for unexpected errors
+                $('#alertMessage')
+                    .removeClass('d-none alert-success')
+                    .addClass('alert-danger')
+                    .text('Something went wrong. Please try again.');
+                console.error(xhr.responseText); // Log the error for debugging
+            }
+        });
+    });
+});
+
+        
+    </script>
+@endsection

@@ -12,13 +12,18 @@ class Event extends Model
     protected $fillable = [
         'title',
         'description',
-        'date', 
-        'location',
+        'event_date', 
     ];
 
     public function users()
     {
         return $this->belongsToMany(User::class, 'event_user');
     }
+
+    public function registrations()
+    {
+        return $this->hasMany(EventUser::class);
+    }
+
 
 }

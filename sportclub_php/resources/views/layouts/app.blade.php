@@ -29,8 +29,8 @@
     <!-- Include Footer -->
     @include('layouts.footer')
 
-    <!-- Bootstrap JS -->
-    <script src="{{ asset('assets/libs/bootstrap-5.3.2-dist/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <!-- Bootstrap JS Bundle (with Popper) -->
+    <script src="{{ asset('assets/libs/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
     <!-- jQuery JS -->
     <script src="{{ asset('assets/libs/jquery/jquery-3.7.1.min.js') }}" type="text/javascript"></script>
     <!-- jQuery UI JS -->
@@ -39,5 +39,9 @@
     <script src="{{ asset('assets/libs/lightbox2-2.11.4/dist/js/lightbox.min.js') }}" type="text/javascript"></script>
     <!-- Custom JS -->
     <script src="{{ asset('assets/dist/app.js') }}" type="text/javascript"></script>
+
+    <!-- AJAX Script for Event Registration -->
+    @yield('scripts')
+    
 </body>
 </html>
