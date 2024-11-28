@@ -161,8 +161,8 @@
 
 @section('scripts')
     <script>
-        
-        $(document).ready(function () {
+
+$(document).ready(function () {
     // Open modal and set event ID
     $(document).on('click', '.register-btn', function () {
         const eventId = $(this).data('event-id');
@@ -181,12 +181,13 @@
             type: 'POST',
             data: formData,
             success: function (response) {
+                // Check for success condition
                 if (response.success) {
                     // Show success alert
                     $('#alertMessage')
                         .removeClass('d-none alert-danger')
                         .addClass('alert-success')
-                        .text('Registration successful!');
+                        .text(response.message); // Use the response message
 
                     // Close the modal and reset the form
                     $('#registerModal').modal('hide');
@@ -211,6 +212,6 @@
     });
 });
 
-        
+
     </script>
 @endsection
