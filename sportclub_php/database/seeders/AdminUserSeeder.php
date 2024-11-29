@@ -2,23 +2,25 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder; // Import the Seeder class
+use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class AdminUserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run()
     {
-        User::create([
-            'name' => 'Thuzar Myo',
-            'email' => 'thuzarmyo12@example.com',
-            'password' => Hash::make('password'),
-            'is_admin' => true,
-        ]);
+        User::updateOrCreate(
+            ['email' => 'lynnhtetzaw.1137@gmail.com'],
+            [
+                'name' => 'Lin Htet Zaw',
+                'is_admin' => true,
+            ]
+        );
+
+        $this->command->info('Admin user with this email created or updated.');
     }
 }
+
+
 

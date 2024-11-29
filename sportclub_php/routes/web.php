@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\EventController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,11 +23,25 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'index')->name('index');
 Route::view('/aboutus', 'aboutus')->name('aboutus');
 
-Route::resource('events', EventController::class);
-Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
-Route::post('/events/register', [EventController::class, 'register'])->name('event.index.register');
+// Public-facing routes for events
+Route::get('/events', [EventController::class, 'index'])->name('events.index'); // Show events
+Route::post('/events/register', [EventController::class, 'register'])->name('events.register'); // Register for an event
 
-Route::get('/admininterface', [AdminController::class, 'dashboard'])->name('dashboard');
+// Admin routes for managing events
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admininterface', [AdminController::class, 'index'])->name('admin.dashboard'); // Admin dashboard
+
+    Route::post('/admin/events', [AdminController::class, 'store'])->name('admin.events.store'); // Create event
+    Route::get('/admin/events/{id}/edit', [AdminController::class, 'edit'])->name('admin.events.edit'); // Edit event
+    Route::put('/admin/events/{id}', [AdminController::class, 'update'])->name('admin.events.update'); // Update event
+    Route::delete('/admin/events/{id}', [AdminController::class, 'destroy'])->name('admin.events.destroy'); // Delete event
+
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/admin/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+});
+
 
 Route::get('/news', [HomeController::class, 'news'])->name('news');
 

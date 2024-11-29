@@ -25,12 +25,15 @@
         </div>
     </div>
 
+
     <!-- Event Management Section -->
     <div class="mt-5">
         <h2 class="text-secondary">Event Management</h2>
 
         <!-- Event Form -->
-        <form id="eventForm" action="{{ isset($event) ? route('events.update', $event->id) : route('events.store') }}" method="POST" enctype="multipart/form-data" class="p-4 bg-light rounded shadow-sm">
+        <form id="eventForm" 
+            action="{{ isset($event) ? route('admin.events.update', $event->id) : route('admin.events.store') }}" 
+            method="POST" enctype="multipart/form-data" class="p-4 bg-light rounded shadow-sm">
             @csrf
             @if(isset($event))
                 @method('PUT') 
@@ -91,13 +94,13 @@
                 <tbody class="text-center">
                     @foreach ($events as $event)
                         <tr>
-                            <td>{{ $event->title }}</td>
-                            <td>{{ $event->event_date }}</td>
-                            <td>{{ $event->time }}</td>
-                            <td>{{ $event->location }}</td>
+                            <td class="align-middle">{{ $event->title }}</td>
+                            <td class="align-middle">{{ $event->event_date }}</td>
+                            <td class="align-middle">{{ $event->time }}</td>
+                            <td class="align-middle">{{ $event->location }}</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-warning" data-id="{{ $event->id }}" onclick="editEvent(this)">Edit</a>
-                                <form action="{{ route('events.destroy', $event->id) }}" method="POST" style="display:inline;">
+                                <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">Delete</button>
@@ -109,17 +112,98 @@
             </table>
         </div>
     </div>
+
+
+    <!-- User Management Section -->
+    <div class="mt-5">
+        <h2 class="text-secondary">User Management</h2>
+
+        <!-- Users Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Preferred Sport</th>
+                        <th>Skill Level</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @foreach ($users as $user)
+                        <tr>
+                            <td class="align-middle">{{ $user->name }}</td>
+                            <td class="align-middle">{{ $user->email }}</td>
+                            <td class="align-middle">{{ $user->preferred_sport }}</td>
+                            <td class="align-middle">{{ $user->skill_level }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" data-id="{{ $user->id }}" onclick="editUser(this)">Edit</button>
+                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- Edit User Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="userForm" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="preferred_sport" class="form-label">Preferred Sport</label>
+                        <input type="text" class="form-control" id="preferred_sport" name="preferred_sport">
+                    </div>
+                    <div class="mb-3">
+                        <label for="skill_level" class="form-label">Skill Level</label>
+                        <input type="text" class="form-control" id="skill_level" name="skill_level">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
 </div>
 
 <script>
 
-    function editEvent(button) {
+function editEvent(button) {
     const eventId = button.getAttribute('data-id');
 
-    fetch(`/events/${eventId}/edit`)
+    fetch(`/admin/events/${eventId}/edit`) 
         .then(response => response.json())
         .then(data => {
-            // Populate the form fields with the event data
+            // Populate the form fields
             document.getElementById('title').value = data.title;
             document.getElementById('event_date').value = data.event_date;
             document.getElementById('time').value = data.time;
@@ -128,14 +212,33 @@
             document.getElementById('age_group').value = data.age_group;
             document.getElementById('description').value = data.description;
 
-            // Set form action to the correct update URL
+            // Set form action for updating the event
             const form = document.getElementById('eventForm');
-            form.action = `/events/${data.id}`; // This uses the correct route for PUT
-
-            // Update the submit button text
+            form.action = `/admin/events/${data.id}`; // Matches the PUT route
             document.querySelector('button[type="submit"]').innerText = 'Update Event';
         });
-    }
+}
+
+function editUser(button) {
+        const userId = button.getAttribute('data-id');
+
+        fetch(`/admin/users/${userId}/edit`)
+            .then(response => response.json())
+            .then(data => {
+                // Populate form fields with user data
+                document.getElementById('name').value = data.name;
+                document.getElementById('email').value = data.email;
+                document.getElementById('preferred_sport').value = data.preferred_sport || '';
+                document.getElementById('skill_level').value = data.skill_level || '';
+
+                // Set form action to the update URL
+                const form = document.getElementById('userForm');
+                form.action = `/admin/users/${data.id}`;
+
+                // Show the modal
+                $('#editUserModal').modal('show');
+            });
+}
 
 </script>
 

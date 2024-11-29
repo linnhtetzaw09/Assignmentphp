@@ -4,22 +4,24 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handle($request, Closure $next)
-{
-    if (auth()->check() && auth()->user()->is_admin) {
-        return $next($request);
+    public function handle(Request $request, Closure $next)
+    {
+        // Check if the user is logged in and is an admin
+        if (auth()->check() && auth()->user()->is_admin == 1) {
+            return $next($request);
+        }
+
+        // Redirect if the user is not an admin
+        return redirect('/')->with('error', 'Access denied!');
     }
-
-    return redirect('/')->with('error', 'Access denied!');
-}
-
 }

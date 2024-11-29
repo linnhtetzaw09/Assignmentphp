@@ -20,9 +20,10 @@
                 <li class="nav-item"><a href="{{ route('events.index') }}" class="nav-link mx-2 menuitems">Events</a></li>
                 <li class="nav-item"><a href="#contact" class="nav-link mx-2 menuitems">Contact</a></li>
 
-                @if(auth()->user() && auth()->user()->role === 'admin')
+                <!-- Show Dashboard for Admins Only -->
+                @if(auth()->check() && auth()->user()->is_admin)
                     <li class="nav-item">
-                        <a class="nav-link mx-2 menuitems" href="{{ route('admininterface') }}">Dashboard</a>
+                        <a class="nav-link mx-2 menuitems" href="{{ route('admin.dashboard') }}">Dashboard</a>
                     </li>
                 @endif
                 
